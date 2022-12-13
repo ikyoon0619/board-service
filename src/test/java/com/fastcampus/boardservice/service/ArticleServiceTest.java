@@ -2,6 +2,7 @@ package com.fastcampus.boardservice.service;
 
 import com.fastcampus.boardservice.domain.Article;
 import com.fastcampus.boardservice.domain.UserAccount;
+import com.fastcampus.boardservice.domain.type.SearchType;
 import com.fastcampus.boardservice.dto.ArticleDto;
 import com.fastcampus.boardservice.dto.ArticleWithCommentsDto;
 import com.fastcampus.boardservice.dto.UserAccountDto;
@@ -44,6 +45,23 @@ class ArticleServiceTest {
         assertThat(articles).isNotNull();
         assertThat(articles).isEmpty();
         then(articleRepository).should().findAll(pageable);
+    }
+
+    @DisplayName("검색어와 함께 게시글을 검색하면, 게시글 페이지를 반환한다.")
+    @Test
+    void givenSearchParameters_whenSearchingArticles_thenReturnsArticlePage() {
+        // Given
+        SearchType searchType = SearchType.TITLE;
+        String searchKeyword = "title";
+        Pageable pageable = Pageable.ofSize(20);
+        given(articleRepository.findByTitleContaining(searchKeyword, pageable)).willReturn(Page.empty());
+
+        // When
+        Page<ArticleDto> articles = sut.searchArticles(searchType, searchKeyword, pageable);
+
+        // Then
+        assertThat(articles).isEmpty();
+        then(articleRepository).should().findByTitleContaining(searchKeyword, pageable);
     }
 
     @DisplayName("게시글 조회하면, 게시글을 반환한다.")
@@ -96,13 +114,14 @@ class ArticleServiceTest {
     @Test
     void givenArticleId_whenDeletingArticle_thenDeletesArticle(){
         // Given
-        willDoNothing().given(articleRepository).delete(any(Article.class));
+        long articleId = 1L;
+        willDoNothing().given(articleRepository).deleteById(articleId);
 
         // When
         sut.deleteArticle(1L);
 
         // Then
-        then(articleRepository).should().delete(any(Article.class));
+        then(articleRepository).should().deleteById(articleId);
     }
 
     private UserAccount createUserAccount() {
