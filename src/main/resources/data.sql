@@ -3,6 +3,9 @@
 insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at, modified_by) values
     ('uno', 'asdf1234', 'faust', 'uno@mail.com', 'I am Uno.', now(), 'uno', now(), 'uno')
 ;
+insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at, modified_by) values
+    ('uno2', 'asdf1234', 'Faust2', 'uno2@mail.com', 'I am Uno2.', now(), 'uno2', now(), 'uno2')
+;
 
 -- 123 게시글
 insert into article (user_account_id, title, content, hashtag, created_by, modified_by, created_at, modified_at) values
@@ -22,13 +25,13 @@ Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '#purple'
                                                                                                                      (1, 'Donec ut mauris eget massa tempor convallis.', 'Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.
 
 Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.', '#maroon', 'Alonso', 'Eustacia', '2022-01-26 06:33:42', '2021-12-08 11:27:30'),
-                                                                                                                     (1, 'Nullam molestie nibh in lectus.', 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.
+                                                                                                                     (2, 'Nullam molestie nibh in lectus.', 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.
 
 Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '#orange', 'Dedra', 'Wilek', '2021-05-04 19:51:29', '2021-10-09 16:52:09'),
-                                                                                                                     (1, 'Sed ante.', 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.
+                                                                                                                     (2, 'Sed ante.', 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.
 
 Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.', '#teal', 'Doe', 'Jodi', '2021-10-23 23:45:21', '2021-08-05 14:19:36'),
-                                                                                                                     (1, 'In hac habitasse platea dictumst.', 'Sed ante. Vivamus tortor. Duis mattis egestas metus.
+                                                                                                                     (2, 'In hac habitasse platea dictumst.', 'Sed ante. Vivamus tortor. Duis mattis egestas metus.
 
 Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.', '#khaki', 'Fitz', 'Jemmie', '2021-01-10 21:03:03', '2021-04-15 05:02:39'),
                                                                                                                      (1, 'Vivamus in felis eu sapien cursus vestibulum.', 'Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.
