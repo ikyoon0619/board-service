@@ -38,8 +38,6 @@
             </attr>
         </attr>
 
-<<<<<<< Updated upstream
-=======
         <attr sel="#pagination">
             <attr sel="li[0]/a"
                   th:text="'previous'"
@@ -49,7 +47,7 @@
             <attr sel="li[1]" th:class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
                 <attr sel="a"
                       th:text="${pageNumber + 1}"
-                      th:href="@{/articles(page=${pageNumber})}"
+                      th:href="@{/articles(page=${pageNumber}, searchType=${param.searchType})}"
                       th:class="'page-link' + (${pageNumber} == ${articles.number} ? ' disabled' : '')"
                 />
             </attr>
@@ -62,6 +60,4 @@
     </attr>
 
 
-
->>>>>>> Stashed changes
 </thlogic>

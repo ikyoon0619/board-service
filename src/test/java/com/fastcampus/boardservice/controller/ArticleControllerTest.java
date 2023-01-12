@@ -1,9 +1,11 @@
 package com.fastcampus.boardservice.controller;
 
 import com.fastcampus.boardservice.config.SecurityConfig;
+import com.fastcampus.boardservice.domain.type.SearchType;
 import com.fastcampus.boardservice.dto.ArticleWithCommentsDto;
 import com.fastcampus.boardservice.dto.UserAccountDto;
 import com.fastcampus.boardservice.service.ArticleService;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,6 +48,22 @@ class ArticleControllerTest {
     public void givenNothing_whenRequestingArticlesView_thenReturnsArticlesView() throws Exception {
         //Given
         given(articleService.searchArticles(eq(null), eq(null), any(Pageable.class))).willReturn(Page.empty());
+        //When & Then
+        mvc.perform(get("/articles"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andExpect(view().name("articles/index"))
+                .andExpect(model().attributeExists("articles"));
+        then(articleService).should().searchArticles(eq(null), eq(null), any(Pageable.class));
+    }
+
+    @DisplayName("[view][GET] 게시글 리스트 (게시판) 페이지 - 검색어와 함께 호출")
+    @Test
+    public void givenSearchKeyword_whenSearchingArticlesView_thenReturnsArticlesView() throws Exception {
+        //Given
+        SearchType searchType = SearchType.TITLE;
+        String searchValue = "title";
+        given(articleService.searchArticles(eq(searchType), eq(searchValue), any(Pageable.class))).willReturn(Page.empty());
         //When & Then
         mvc.perform(get("/articles"))
                 .andExpect(status().isOk())
