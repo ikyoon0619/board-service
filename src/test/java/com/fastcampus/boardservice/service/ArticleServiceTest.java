@@ -64,6 +64,41 @@ class ArticleServiceTest {
         then(articleRepository).should().findByTitleContaining(searchKeyword, pageable);
     }
 
+    @DisplayName("검색어 없이 게시글을 해시태그 검색하면, 빈 페이지를 반환한다.")
+    @Test
+    void givenNoSearchParameters_whenSearchingArticlesViaHashtag_thenReturnsEmptyPage(){
+        // Given
+        Pageable pageable = Pageable.ofSize(20);
+        given(articleRepository.findAll(pageable)).willReturn(Page.empty());
+
+        // When
+        Page<ArticleDto> articles = sut.searchArticles(null, null, pageable);
+
+        // Then
+        assertThat(articles).isNotNull();
+        assertThat(articles).isEmpty();
+        then(articleRepository).should().findAll(pageable);
+    }
+
+    @DisplayName("게시글을 해시태그 검색하면, 게시글 페이지를 반환한다.")
+    @Test
+    void givenSearcHashtag_whenSearchingArticlesViaHashtag_thenReturnsArticlePage(){
+        // Given
+        String hashtag = "#java";
+        Pageable pageable = Pageable.ofSize(20);
+        given(articleRepository.findByHashtag(hashtag, pageable)).willReturn(Page.empty());
+
+        // When
+        Page<ArticleDto> articles = sut.searchArticles(null, null, pageable);
+
+        // Then
+        assertThat(articles).isNotNull();
+        assertThat(articles).isEmpty();
+        then(articleRepository).should().findAll(pageable);
+    }
+
+
+
     @DisplayName("게시글 조회하면, 게시글을 반환한다.")
     @Test
     void givenArticleId_WhenSearchingArticle_ThenReturnsArticle(){
