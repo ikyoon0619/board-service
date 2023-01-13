@@ -6,6 +6,7 @@ import com.fastcampus.boardservice.dto.ArticleWithCommentsDto;
 import com.fastcampus.boardservice.dto.UserAccountDto;
 import com.fastcampus.boardservice.service.ArticleService;
 
+import com.fastcampus.boardservice.service.PaginationService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,10 +20,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -38,6 +39,8 @@ class ArticleControllerTest {
 
     @MockBean private ArticleService articleService;
 
+    @MockBean private PaginationService paginationService;
+
     ArticleControllerTest(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
@@ -48,13 +51,17 @@ class ArticleControllerTest {
     public void givenNothing_whenRequestingArticlesView_thenReturnsArticlesView() throws Exception {
         //Given
         given(articleService.searchArticles(eq(null), eq(null), any(Pageable.class))).willReturn(Page.empty());
+        given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(0,1,2,3,4));
         //When & Then
         mvc.perform(get("/articles"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/index"))
-                .andExpect(model().attributeExists("articles"));
+                .andExpect(model().attributeExists("articles"))
+                .andExpect(model().attributeExists("paginationBarNumbers"))
+                .andExpect(model().attributeExists("searchTypes"));
         then(articleService).should().searchArticles(eq(null), eq(null), any(Pageable.class));
+        then(paginationService).should().getPaginationBarNumbers(anyInt(),anyInt());
     }
 
     @DisplayName("[view][GET] 게시글 리스트 (게시판) 페이지 - 검색어와 함께 호출")
@@ -64,13 +71,20 @@ class ArticleControllerTest {
         SearchType searchType = SearchType.TITLE;
         String searchValue = "title";
         given(articleService.searchArticles(eq(searchType), eq(searchValue), any(Pageable.class))).willReturn(Page.empty());
+        given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(0,1,2,3,4));
         //When & Then
-        mvc.perform(get("/articles"))
+        mvc.perform(get("/articles")
+                        .queryParam("searchType",searchType.name())
+                        .queryParam("searchValue", searchValue)
+                )
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/index"))
-                .andExpect(model().attributeExists("articles"));
-        then(articleService).should().searchArticles(eq(null), eq(null), any(Pageable.class));
+                .andExpect(model().attributeExists("articles"))
+                .andExpect(model().attributeExists("searchTypes"));
+        then(articleService).should().searchArticles(eq(searchType), eq(searchValue),any(Pageable.class));
+        then(paginationService).should().getPaginationBarNumbers(anyInt(),anyInt());
+
     }
 
     @DisplayName("[view][GET] 게시글 상세 페이지 - 정상 호출")
