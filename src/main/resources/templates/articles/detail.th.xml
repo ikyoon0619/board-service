@@ -9,8 +9,13 @@
         <attr sel="#email" th:text="${article.email}"/>
         <attr sel="#created-at" th:datetime="${article.createdAt}" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd')}"/>
         <attr sel="#hashtag/a" th:text="${article.hashtag}"/>
-        <attr sel="#article-content/p" th:text="${article.content}"/>
+        <attr sel="#article-content/pre" th:text="${article.content}"/>
 
+        <attr sel="#article-buttons" >
+            <attr sel="#delete-article-form" th:action="'/articles/' + ${article.id} + '/delete'" th:method="post">
+                <attr sel="#update-article" th:href="'/articles/' + ${article.id} + '/form'" />
+            </attr>
+        </attr>
 
     </attr>
 

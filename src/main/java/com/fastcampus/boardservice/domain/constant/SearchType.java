@@ -1,4 +1,4 @@
-package com.fastcampus.boardservice.domain.type;
+package com.fastcampus.boardservice.domain.constant;
 
 import lombok.Getter;
 

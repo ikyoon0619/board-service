@@ -55,16 +55,17 @@
             </div>
         </div>
 
-        <table class="table" id="article-table">
-            <thead>
+        <div class="row">
+            <table class="table" id="article-table">
+                <thead>
                 <tr>
                     <th class="title col-6"><a>제목</a></th>
                     <th class="hashtag col-2"><a>해시태그</a></th>
                     <th class="user-id col"><a>작성자</a></th>
                     <th class="created-at col"><a>작성일</a></th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr>
                     <td class="title"><a>첫 글 </a></td>
                     <td class="hashtag">#Java</td>
@@ -83,8 +84,16 @@
                     <td>root</td>
                     <td>2022-03-02</td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="row">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a class="btn btn-primary me-md-2" role="button" id="write-article">글쓰기</a>
+            </div>
+        </div>
 
         <div class="row">
             <nav id="pagination" aria-label="Page navigation example">

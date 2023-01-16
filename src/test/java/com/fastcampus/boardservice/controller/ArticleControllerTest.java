@@ -1,7 +1,7 @@
 package com.fastcampus.boardservice.controller;
 
 import com.fastcampus.boardservice.config.SecurityConfig;
-import com.fastcampus.boardservice.domain.type.SearchType;
+import com.fastcampus.boardservice.domain.constant.SearchType;
 import com.fastcampus.boardservice.dto.ArticleWithCommentsDto;
 import com.fastcampus.boardservice.dto.UserAccountDto;
 import com.fastcampus.boardservice.service.ArticleService;
