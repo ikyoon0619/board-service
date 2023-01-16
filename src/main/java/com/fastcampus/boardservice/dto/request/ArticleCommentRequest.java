@@ -2,7 +2,6 @@ package com.fastcampus.boardservice.dto.request;
 
 import com.fastcampus.boardservice.dto.ArticleCommentDto;
 import com.fastcampus.boardservice.dto.UserAccountDto;
-import com.fastcampus.boardservice.dto.response.ArticleCommentResponse;
 
 import java.io.Serializable;
 
