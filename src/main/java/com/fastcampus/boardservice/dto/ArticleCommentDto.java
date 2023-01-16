@@ -2,6 +2,7 @@ package com.fastcampus.boardservice.dto;
 
 import com.fastcampus.boardservice.domain.Article;
 import com.fastcampus.boardservice.domain.ArticleComment;
+import com.fastcampus.boardservice.domain.UserAccount;
 
 import java.time.LocalDateTime;
 
@@ -39,10 +40,10 @@ public record ArticleCommentDto(
         );
     }
 
-    public ArticleComment toEntity(Article entity) {
+    public ArticleComment toEntity(Article article, UserAccount userAccount) {
         return ArticleComment.of(
-                entity,
-                userAccountDto.toEntity(),
+                article,
+                userAccount,
                 content
         );
     }
