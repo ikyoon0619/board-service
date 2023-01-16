@@ -20,7 +20,8 @@ public class ArticleComment extends AuditingFields{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter @ManyToOne(optional = false) private UserAccount userAccount;
+    @Setter @ManyToOne(optional = false) @JoinColumn(name = "userId") private UserAccount userAccount; // 유저 정보 (ID)
+
     @Setter @ManyToOne(optional = false) private Article article;
     @Setter @Column(nullable = false, length = 500) private String content;
 
@@ -29,6 +30,7 @@ public class ArticleComment extends AuditingFields{
     private ArticleComment(Article article, UserAccount userAccount, String content) {
         this.article = article;
         this.userAccount = userAccount;
+
         this.content = content;
     }
 

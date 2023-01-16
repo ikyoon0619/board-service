@@ -2,7 +2,7 @@ package com.fastcampus.boardservice.service;
 
 import com.fastcampus.boardservice.domain.Article;
 import com.fastcampus.boardservice.domain.UserAccount;
-import com.fastcampus.boardservice.domain.type.SearchType;
+import com.fastcampus.boardservice.domain.constant.SearchType;
 import com.fastcampus.boardservice.dto.ArticleDto;
 import com.fastcampus.boardservice.dto.ArticleWithCommentsDto;
 import com.fastcampus.boardservice.dto.UserAccountDto;
@@ -118,7 +118,7 @@ class ArticleServiceTest {
         Article article = createArticle();
         given(articleRepository.findById(articleId)).willReturn(Optional.of(article));
         // When
-        ArticleWithCommentsDto dto = sut.getArticle(articleId);
+        ArticleDto  dto = sut.getArticle(articleId);
         // Then
         assertThat(dto)
                 .hasFieldOrPropertyWithValue("title", article.getTitle())
@@ -147,7 +147,7 @@ class ArticleServiceTest {
         ArticleDto dto = createArticleDto("새 타이틀", "새 내용", "#springboot");
         given(articleRepository.getReferenceById(dto.id())).willReturn(article);
         // When
-        sut.updateArticle(dto);
+        sut.updateArticle(dto.id(), dto);
         // Then
         assertThat(article)
                 .hasFieldOrPropertyWithValue("title", dto.title())
